@@ -1,0 +1,4 @@
+Patient Name: Jane Smith
+Test: Chest X-Ray
+Findings: No abnormalities.
+Hospital: Downtown Medical

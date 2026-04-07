@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('dashboard') }}" class="back-link">←</a> Smart Scan Result</h1>
+    <p style="color: var(--text-secondary);">Here is the AI-generated summary of your uploaded report.</p>
+</div>
+<div class="content-area">
+    <div class="scan-result-grid">
+        <div class="content-card glass-card">
+            <div class="card-header"><h3>Original Upload</h3></div>
+            <div class="card-body">
+                <img src="{{ url_for('uploaded_file', filename=record.filename) }}" alt="Uploaded Medical Report" style="width: 100%; border-radius: 8px;">
+            </div>
+        </div>
+        <div class="content-card glass-card">
+            <div class="card-header"><h3>AI-Generated Summary</h3></div>
+            <div class="card-body">
+                <div class="ai-summary-text">
+                    {{ record.ai_summary | safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

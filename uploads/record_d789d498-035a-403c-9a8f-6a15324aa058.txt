@@ -1,0 +1,4 @@
+Patient Name: John Doe
+Test: Complete Blood Count
+Result: All values within normal range.
+Hospital: City General Hospital

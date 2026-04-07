@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1>Upload a Medical Record</h1>
+</div>
+<div class="content-area" style="max-width: 700px; margin: 0 auto;">
+    <div class="content-card">
+        <div class="card-header">
+            <h3>New Document Details</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                {% if current_user.role == 'doctor' %}
+                <div class="form-group">
+                    <label for="patient_id">Select Patient</label>
+                    <select name="patient_id" id="patient_id" required>
+                        <option value="">-- Choose a patient --</option>
+                        {% for patient in patients %}
+                        <option value="{{ patient.id }}">{{ patient.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+                <div class="form-group">
+                    <label for="record_type">Type of Record</label>
+                    <input type="text" id="record_type" name="record_type" placeholder="e.g., Blood Test Results, MRI Scan" required>
+                </div>
+                <div class="form-group">
+                    <label for="file">Select File (PDF, PNG, JPG)</label>
+                    <input type="file" id="file" name="file" accept=".pdf,.png,.jpg,.jpeg" required style="padding: 0.5rem; border: 1px solid var(--border-color);">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Upload Record</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

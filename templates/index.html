@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediLink+ | Your Health, Unified and Secure</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<!-- ✅ Class added here to target this specific page -->
+<body class="home-page-bg">
+    <header class="public-header">
+        <div class="container">
+            <a href="{{ url_for('index') }}" class="brand-logo">MediLink+</a>
+            <nav class="main-nav">
+                <a href="{{ url_for('login') }}" class="btn btn-secondary">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Sign Up</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero-section">
+            <div class="container hero-content">
+                <h1>Patient-Friendly Health Insights.</h1>
+                <p>Smart medical record interoperability for a seamless and secure healthcare experience.</p>
+                <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg">Get Started for Free</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

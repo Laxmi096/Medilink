@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1>Admin Dashboard</h1>
+</div>
+<div class="content-area">
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h2>{{ total_users }}</h2>
+            <p>Total Users</p>
+        </div>
+        <div class="stat-card">
+            <h2>{{ patient_count }}</h2>
+            <p>Patients</p>
+        </div>
+        <div class="stat-card">
+            <h2>{{ doctor_count }}</h2>
+            <p>Doctors</p>
+        </div>
+        <div class="stat-card">
+            <h2>{{ record_count }}</h2>
+            <p>Records Uploaded</p>
+        </div>
+    </div>
+
+    <div class="content-card">
+        <div class="card-header">
+            <h3>User Management</h3>
+        </div>
+        <div class="card-body">
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.role.title() }}</td>
+                        <td>
+                            {% if user.role == 'patient' %}
+                            <a href="{{ url_for('manage_patient', patient_id=user.id) }}" class="btn btn-secondary">Manage</a>
+                            {% endif %}
+                            {% if user.role != 'admin' %}
+                            <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" onsubmit="return confirm('Are you sure? This action cannot be undone.');" style="display:inline;">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

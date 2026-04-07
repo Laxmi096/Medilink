@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('view_patients') }}" class="back-link">←</a> Viewing Records for: {{ patient.username }}</h1>
+    <p style="color: var(--text-secondary);">A complete health overview including analytics, prescriptions, and documents.</p>
+</div>
+<div class="content-area">
+    <div class="card-actions" style="margin-bottom: 1.5rem;">
+        <a href="{{ url_for('prescribe', patient_id=patient.id) }}" class="btn btn-primary">Prescribe New Medication</a>
+    </div>
+    
+    <div class="content-card glass-card">
+        <div class="card-header"><h3>Health Analytics</h3></div>
+        <div class="card-body">
+            <p>Recent blood pressure trends for {{ patient.username }}.</p>
+            {% if health_data_json and health_data_json != '{}' and health_data_json != '{"labels": [], "systolic": [], "diastolic": []}' %}
+                <canvas id="healthChart"></canvas>
+            {% else %}
+                <p style="color: var(--text-secondary); text-align: center; padding: 1rem;">No structured health data has been recorded for this patient yet.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="content-card glass-card">
+        <div class="card-header"><h3>Current & Past Prescriptions</h3></div>
+        <div class="card-body">
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>End Date</th>
+                        <th>Prescribed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pres in prescriptions %}
+                    <tr>
+                        <td><strong>{{ pres.medication_name }}</strong></td>
+                        <td>{{ pres.dosage }}</td>
+                        <td>{{ pres.frequency }}</td>
+                        <td>{{ pres.end_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ pres.doctor.username }}</td>
+                    </tr>
+                    {% else %}
+                    <tr><td colspan="5" style="text-align: center; padding: 1rem; color: var(--text-secondary);">No prescriptions on file for this patient.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="content-card glass-card">
+        <div class="card-header"><h3>Uploaded Documents</h3></div>
+        <div class="card-body">
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Record Type</th>
+                        <th>Filename</th>
+                        <th>Date Uploaded</th>
+                        <th>Uploaded By</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in records %}
+                    <tr>
+                        <td>{{ record.record_type }}</td>
+                        <td>{{ record.filename }}</td>
+                        <td>{{ record.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ record.uploader.username }}</td>
+                        <td style="display: flex; gap: 0.5rem;">
+                            <a href="{{ url_for('uploaded_file', filename=record.filename) }}" target="_blank" class="btn btn-secondary" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">View File</a>
+                            <button class="btn btn-secondary view-text-btn" data-text="{{ record.extracted_text }}" style="padding: 0.4rem 0.8rem; font-size: 0.9rem;">View Text</button>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-secondary);">This patient has no uploaded records.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div id="textModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>Extracted Text from Record</h3>
+        <pre id="modalText"></pre>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- Chart.js Logic ---
+    try {
+        const healthData = JSON.parse('{{ health_data_json | tojson | safe }}');
+        if (healthData && healthData.labels && healthData.labels.length > 0) {
+            const ctx = document.getElementById('healthChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: healthData.labels,
+                    datasets: [{
+                        label: 'Systolic (mmHg)', data: healthData.systolic,
+                        borderColor: '#8b5cf6', backgroundColor: 'rgba(139, 92, 246, 0.2)', fill: true, tension: 0.3
+                    }, {
+                        label: 'Diastolic (mmHg)', data: healthData.diastolic,
+                        borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.2)', fill: true, tension: 0.3
+                    }]
+                }
+            });
+        }
+    } catch (e) {
+        console.error("Could not render chart:", e);
+    }
+
+    // --- Modal Logic for OCR Text ---
+    const modal = document.getElementById("textModal");
+    const modalText = document.getElementById("modalText");
+    const closeBtn = document.querySelector(".modal .close-btn");
+
+    document.querySelectorAll('.view-text-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const text = this.getAttribute('data-text');
+            modalText.textContent = text ? text.trim() : "No text was extracted or the file is not a supported image type.";
+            modal.style.display = "block";
+        });
+    });
+
+    if (closeBtn) {
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+});
+</script>
+{% endblock %}

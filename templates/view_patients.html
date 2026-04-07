@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('dashboard') }}" class="back-link">←</a> View & Search Patients</h1>
+</div>
+<div class="content-area">
+    <div class="content-card glass-card">
+        <div class="card-header">
+            <h3>Find a Patient</h3>
+        </div>
+        <div class="card-body">
+            <form method="GET" action="{{ url_for('view_patients') }}">
+                <div class="form-group" style="display: flex; gap: 0;">
+                    <input type="text" name="search" placeholder="Enter patient name or email..." value="{{ search_term or '' }}" style="flex-grow: 1; border-radius: 8px 0 0 8px; margin-bottom: 0;">
+                    <button type="submit" class="btn btn-primary" style="border-radius: 0 8px 8px 0;">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if patients or search_term %}
+    <div class="content-card glass-card">
+        <div class="card-header">
+            <h3>
+                {% if search_term %}
+                    Search Results for "{{ search_term }}"
+                {% else %}
+                    Showing All Patients
+                {% endif %}
+            </h3>
+        </div>
+        <div class="card-body">
+            {% if patients %}
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Email</th>
+                        <th>Records on File</th>
+                        <th style="text-align: right;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td>
+                            <div class="patient-cell">
+                                <img src="{{ url_for('static', filename='profile_pics/' + patient.profile_image) }}" class="patient-avatar">
+                                <span>{{ patient.username }}</span>
+                            </div>
+                        </td>
+                        <td>{{ patient.email }}</td>
+                        <td>{{ patient.records|length }}</td>
+                        <td style="text-align: right;">
+                            <a href="{{ url_for('view_patient_records', patient_id=patient.id) }}" class="btn btn-secondary">View Details →</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p style="text-align: center; color: var(--text-secondary); padding: 1rem;">No patients found.</p>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

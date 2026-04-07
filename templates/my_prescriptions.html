@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('dashboard') }}" class="back-link">←</a> My Prescriptions & Reminders</h1>
+</div>
+<div class="content-area">
+    <div class="content-card">
+        <div class="card-header"><h3>Current and Past Medications</h3></div>
+        <div class="card-body">
+            <table class="records-table">
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Prescribed By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pres in prescriptions %}
+                    <tr>
+                        <td><strong>{{ pres.medication_name }}</strong></td>
+                        <td>{{ pres.dosage }}</td>
+                        <td>{{ pres.frequency }}</td>
+                        <td>{{ pres.start_date.strftime('%b %d, %Y') }}</td>
+                        <td>{{ pres.end_date.strftime('%b %d, %Y') }}</td>
+                        <td>{{ pres.doctor.username }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 2rem;">You have no prescriptions on file.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

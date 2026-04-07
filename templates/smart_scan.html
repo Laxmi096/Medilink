@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('dashboard') }}" class="back-link">←</a> Smart Scan</h1>
+    <p style="color: var(--text-secondary);">Upload an image of a medical report and our AI will summarize it for you.</p>
+</div>
+<div class="content-area" style="max-width: 700px; margin: 0 auto;">
+    <div class="content-card glass-card">
+        <div class="card-header"><h3>Upload Report Image</h3></div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Select Image File (PNG, JPG)</label>
+                    <input type="file" id="file" name="file" accept=".png,.jpg,.jpeg" required style="padding: 0.5rem; border: 1px solid var(--glass-border); background-color: rgba(17, 24, 39, 0.7); color: white;">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Scan and Summarize</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

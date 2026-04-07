@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <header class="dashboard-header">
+        <a href="{{ url_for('dashboard') }}" class="brand-logo">MediLink+</a>
+        <nav class="dashboard-nav">
+            <a href="{{ url_for('profile') }}">My Profile</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container" style="padding-top: 1.5rem; padding-bottom: 1.5rem;">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+        
+        {% block dashboard_content %}{% endblock %}
+    </main>
+
+    {% if current_user.role in ['patient', 'doctor'] %}
+        <a href="{{ url_for('upload_file') }}" class="fab" title="Upload New Record">+</a>
+    {% endif %}
+{% endblock %}

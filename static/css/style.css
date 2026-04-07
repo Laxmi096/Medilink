@@ -1,0 +1,254 @@
+/* --- MEDILINK+ FINAL UI - GLASSMORPHISM EDITION --- */
+
+/* 1. VARIABLES & GLOBAL STYLES */
+:root {
+    --primary-glow: #10b981; /* Vibrant green */
+    --secondary-glow: #3b82f6; /* Vibrant Blue */
+    --text-primary: #ffffff;
+    --text-secondary: #e5e7eb; /* Light gray for subtitles */
+    --glass-bg: rgba(31, 41, 55, 0.5); /* Semi-transparent dark gray */
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --primary-glow:#10b981; /* Vibrant Purple */
+    --primary-color: ; /* Indigo */
+    --primary-hover: #4338ca;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    color: var(--text-primary);
+    background-color: #a0b7ed; /* Very green background */
+    background-image:
+        radial-gradient(at 20% 25%, hsla(212,72%,53%,0.4) 0px, transparent 50%),
+        radial-gradient(at 75% 30%, hsla(262,72%,53%,0.4) 0px, transparent 50%),
+        radial-gradient(at 5% 95%, hsla(332,72%,53%,0.4) 0px, transparent 50%),
+        radial-gradient(at 80% 90%, hsla(212,72%,53%,0.4) 0px, transparent 50%);
+    background-attachment: fixed;
+    line-height: 1.6;
+}
+
+.container { width: 90%; max-width: 1200px; margin: 0 auto; }
+.btn { padding: 0.75rem 1.5rem; border-radius: 8px; font-weight: 600; border: none; text-decoration: none; display: inline-block; cursor: pointer; transition: all 0.2s ease; }
+.btn-primary {
+    background-image: linear-gradient(to right, var(--primary-glow) 0%, var(--secondary-glow) 100%);
+    color: white;
+    box-shadow: 0 4px 15px 0 rgba(59, 130, 246, 0.5);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 7px 20px 0 rgba(59, 130, 246, 0.4); }
+.btn-secondary { background-color: #e9e9f0; color: var(--text-dark); }
+.btn-danger { background-color: #ef4444; color: white; }
+
+.alert { border: 1px solid; padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; font-weight: 500;}
+.alert-success { background-color: rgba(74, 222, 128, 0.1); border-color: rgba(74, 222, 128, 0.5); color: #a7ddf3; }
+.alert-danger { background-color: rgba(248, 113, 113, 0.1); border-color: rgba(248, 113, 113, 0.5); color: #fecaca; }
+
+.form-group { margin-bottom: 1.25rem; }
+.form-group label { display: block; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.5rem; }
+.form-group input, .form-group select, textarea {
+    width: 100%;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    font-size: 1rem;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+.form-group input::placeholder { color: #9ca3af; }
+
+/* 2. PUBLIC & AUTH PAGES */
+.public-header { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid var(--glass-border); padding: 1rem 0; position: sticky; top: 0; z-index: 1000; }
+.public-header .container { display: flex; justify-content: space-between; align-items: center; }
+.hero-section { text-align: center; padding: 6rem 2rem; }
+.hero-content h1 { font-size: 3.5rem; font-weight: 700; }
+.hero-content p { font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin: 1rem auto 2rem; }
+.auth-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.auth-card { width: 100%; max-width: 420px; padding: 3rem; }
+
+/* 3. DASHBOARD (INTERNAL PAGES) */
+.app-header {
+    background: rgba(36, 143, 185, 0.7);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 1000;
+}
+.brand-logo { font-size: 1.75rem; font-weight: 700; color: var(--text-primary); text-decoration: none; }
+.app-nav a { text-decoration: none; color: var(--text-secondary); font-weight: 500; margin-left: 1.5rem; }
+.page-header { padding: 2.5rem; text-align: center; }
+.page-header h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
+.page-header p { color: var(--text-secondary); }
+.content-area { padding: 0 2.5rem 2.5rem; }
+.content-card {
+    background: var(--glass-bg);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+.card-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--glass-border); }
+.card-header h3 { margin: 0; font-size: 1.25rem; font-weight: 500; }
+.card-body { padding: 1.5rem; }
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.5rem; }
+.records-table { width: 100%; border-collapse: collapse; }
+.records-table th, .records-table td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--glass-border); text-align: left; }
+.records-table th { font-weight: 600; color: var(--text-secondary); }
+.back-link { text-decoration: none; color: inherit; margin-right: 1rem; }
+
+/* 4. FEATURE-SPECIFIC STYLES */
+/* AI Assistant */
+.ai-page-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 1.5rem; align-items: flex-start; }
+.ai-chat-panel { background-color: #7fc5f7; border-radius: 16px; padding: 1.5rem; border: 1px solid var(--glass-border); box-shadow: var(--shadow); }
+#chat-container { display: flex; flex-direction: column; height: 450px; }
+#chat-window { flex-grow: 1; border: 1px solid var(--glass-border); border-radius: 8px; padding: 1rem; overflow-y: auto; margin-bottom: 1rem; background-color: rgba(17, 24, 39, 0.5); }
+.chat-message { padding: 0.75rem 1rem; border-radius: 12px; margin-bottom: 0.75rem; max-width: 85%; line-height: 1.5; }
+.chat-message.user { background-image: linear-gradient(to right, var(--primary-glow) 0%, var(--secondary-glow) 100%); color: white; margin-left: auto; }
+.chat-message.bot { background-color: #374151; color: var(--text-secondary); }
+.chat-input-area { display: flex; gap: 1rem; }
+#send-button { width: 50px; border: none; background-image: linear-gradient(to right, var(--primary-glow) 0%, var(--secondary-glow) 100%); color: white; font-size: 1.5rem; border-radius: 8px; cursor: pointer; }
+.ai-logo-container { width: 120px; height: 120px; margin: 0 auto 1rem; border-radius: 50%; background-image: linear-gradient(135deg, var(--primary-glow) 0%, var(--secondary-glow) 100%); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); }
+.ai-logo-svg { width: 60px; height: 60px; color: white; }
+
+/* Patient/Doctor Dashboard Launchpad */
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.feature-card { background: var(--glass-bg); border-radius: 16px; padding: 2rem; text-decoration: none; color: var(--text-primary); box-shadow: var(--shadow); transition: all 0.3s ease; border-top: 4px solid transparent; }
+.feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+.feature-card:nth-child(odd):hover { border-top-color: #3B82F6; } /* Blue */
+.feature-card:nth-child(even):hover { border-top-color: #10b981; } /* Green */
+.feature-icon-wrapper { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; }
+.feature-card:nth-child(odd) .feature-icon-wrapper { background-color: rgba(184, 246, 59, 0.2); color: #93c5fd; }
+.feature-card:nth-child(even) .feature-icon-wrapper { background-color: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+.feature-card h3 { margin: 0 0 0.5rem; font-size: 1.25rem; }
+.feature-card p { margin: 0; color: var(--text-secondary); font-size: 0.95rem; }
+
+/* Doctor Card Specifics */
+.doctor-card:nth-child(even):hover { border-top-color: #FBBF24; } /* Yellow */
+.doctor-card:nth-child(even) .feature-icon-wrapper { background-color: rgba(251, 191, 36, 0.2); color: #fcd34d; }
+
+/* Colored Feature Pages */
+.content-card.card-blue { background-color: rgba(36, 33, 196, 0.15); border-top: 4px solid #60a5fa; }
+.content-card.card-green { background-color: rgba(16, 185, 129, 0.15); border-top: 4px solid #4ade80; }
+.content-card.card-yellow { background-color: rgba(251, 191, 36, 0.15); border-top: 4px solid #facc15; }
+
+/* Modal for OCR */
+.modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+.modal-content { background-color: #1f2937; margin: 10% auto; padding: 2rem; border: 1px solid var(--glass-border); width: 80%; max-width: 700px; border-radius: 16px; position: relative; }
+.close-btn { color: #aaa; position: absolute; top: 15px; right: 25px; font-size: 28px; font-weight: bold; cursor: pointer; }
+#modalText { white-space: pre-wrap; word-wrap: break-word; background-color: #111827; padding: 1rem; border-radius: 8px; max-height: 50vh; overflow-y: auto; }
+/* --- NEW: Input Icon Styles --- */
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    /* Add padding to the right to make space for the icon */
+    padding-right: 2.5rem; 
+}
+
+.input-icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: #9ca3af;
+    display: none; /* Hidden by default, shown by JS */
+}
+
+.toggle-password {
+    display: block; /* Always show the password toggle */
+}
+/* --- NEW: Professional Doctor Dashboard Styles --- */
+
+.patient-cell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+}
+
+.patient-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--glass-border);
+}
+
+.empty-state, .initial-state-card {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+}
+
+.empty-state svg, .initial-state-card svg {
+    color: var(--glass-border);
+    margin-bottom: 1rem;
+}
+
+.empty-state h4, .initial-state-card h2 {
+    color: var(--text-primary);
+    margin: 0 0 0.5rem;
+}
+
+.initial-state-card {
+    margin-top: 1.5rem;
+}
+/* --- NEW: Larger AI Chat Input Box --- */
+
+.chat-input-area #chat-input {
+    padding: 1rem; /* Increases the height and inner spacing */
+    font-size: 1.1rem; /* Makes the text inside larger */
+}
+/* --- AI Assistant Page Layout & Input Box Size --- */
+
+.ai-page-layout {
+    display: grid;
+    /* ✅ CHANGED: Gives more space to the chat panel (3/4) vs the logo (1/4) */
+    grid-template-columns: 3fr 1fr; 
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.chat-input-area #chat-input {
+    padding: 1rem; /* Increases height */
+    font-size: 1.1rem; /* Increases text size */
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 992px) {
+    .ai-page-layout {
+        grid-template-columns: 1fr;
+    }
+}
+/* --- NEW: Smart Scan Result Styles --- */
+.scan-result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+.ai-summary-text {
+    white-space: pre-wrap; /* Preserves line breaks from the AI response */
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+@media (max-width: 992px) {
+    .scan-result-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1>Manage Patient: {{ patient.username }}</h1>
+</div>
+<div class="content-area">
+    <div class="dashboard-grid" style="grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div class="content-card">
+            <div class="card-header"><h3>Assign a New Doctor</h3></div>
+            <div class="card-body">
+                <form method="POST" action="">
+                    <div class="form-group">
+                        <label for="doctor_id">Select a Doctor to Assign</label>
+                        <select name="doctor_id" id="doctor_id" required>
+                            <option value="">-- Choose a doctor --</option>
+                            {% for doctor in all_doctors %}
+                            <option value="{{ doctor.id }}">Dr. {{ doctor.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Assign Doctor</button>
+                </form>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="card-header"><h3>Currently Assigned Doctors</h3></div>
+            <div class="card-body">
+                <table class="records-table">
+                    <tbody>
+                        {% for doctor in patient.doctors %}
+                        <tr>
+                            <td>Dr. {{ doctor.username }}</td>
+                            <td style="text-align: right;">
+                                <form action="{{ url_for('remove_doctor_from_patient', patient_id=patient.id, doctor_id=doctor.id) }}" method="POST">
+                                    <button type="submit" class="btn btn-danger">Unassign</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td>No doctors are currently assigned to this patient.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

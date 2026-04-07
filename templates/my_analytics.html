@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('dashboard') }}" class="back-link" style="text-decoration: none; color: inherit;">←</a> My Health Analytics</h1>
+</div>
+<div class="content-area">
+    <div class="dashboard-grid">
+        <div class="content-card">
+            <div class="card-header"><h3>Analytics: Blood Pressure</h3></div>
+            <div class="card-body">
+                {% if bp_data_json and bp_data_json != '{}' and bp_data_json != '{"labels": [], "systolic": [], "diastolic": []}' %}
+                    <canvas id="bpChart" data-bp='{{ bp_data_json }}'></canvas>
+                {% else %}
+                    <p style="color: var(--text-light);">No blood pressure data recorded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="card-header"><h3>Analytics: Blood Glucose</h3></div>
+            <div class="card-body">
+                {% if glucose_data_json and glucose_data_json != '{}' and glucose_data_json != '{"labels": [], "levels": []}' %}
+                    <canvas id="glucoseChart" data-glucose='{{ glucose_data_json }}'></canvas>
+                {% else %}
+                    <p style="color: var(--text-light);">No blood glucose data recorded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="content-card">
+        <div class="card-header"><h3>Add New Health Reading</h3></div>
+        <div class="card-body">
+            <form action="{{ url_for('add_metric') }}" method="POST">
+                <p>Enter your latest blood pressure reading below.</p>
+                <div class="form-group-inline">
+                    <div class="form-group">
+                        <label for="systolic">Systolic (e.g., 120)</label>
+                        <input type="number" name="systolic" id="systolic" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diastolic">Diastolic (e.g., 80)</label>
+                        <input type="number" name="diastolic" id="diastolic" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Save Reading</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+{% endblock %}

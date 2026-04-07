@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="page-header">
+    <h1><a href="{{ url_for('dashboard') }}" class="back-link">←</a> Analytics Overview</h1>
+    <p>A summary of platform activity and key metrics.</p>
+</div>
+<div class="content-area">
+    <div class="stats-grid">
+        <div class="stat-card glass-card">
+            <h2>{{ patient_count }}</h2>
+            <p>Total Patients</p>
+        </div>
+        <div class="stat-card glass-card">
+            <h2>{{ prescriptions_written }}</h2>
+            <p>Total Prescriptions Written</p>
+        </div>
+        <div class="stat-card glass-card">
+            <h2>{{ records_uploaded }}</h2>
+            <p>Total Records on Platform</p>
+        </div>
+    </div>
+
+    </div>
+{% endblock %}
